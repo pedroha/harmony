@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Music Hackathon - Harmony, 2017</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<script type="text/javascript" src="Tone.js"></script>
+	<script type="text/javascript" src="jquery.min.js"></script>
+
+	<script type="text/javascript">
+		// jshint ignore: start
+	</script>
+
+</head>
+<body>	
+
+	<style type="text/css">
+
+		.keyboard button {
+			width: 70px;
+			height: 100px;
+			outline: 0;
+			padding: 20px;
+			border-radius: 10px;
+			border: 0;
+			background-color: #bada55;
+			border: 4px solid #00dd00;
+			transition: 0.5s;
+		}
+
+		.keyboard button:hover {
+			background-color: yellow;
+		}
+
+		.keyboard button.active {
+			border: 4px solid blue;
+		}
+
+	</style>
+
+	<div class="keyboard">
+		<button class="A3">A</button>
+		<button class="B3">B</button>
+		<button class="C3">C</button>
+		<button class="D3">D</button>
+		<button class="E3">E</button>
+		<button class="F3">F</button>
+		<button class="G3">G</button>
+		<button class="A4">A</button>
+	</div>
+
+	<script type="text/javascript">
+
+		var synth = new Tone.PolySynth(3, Tone.Synth, {
+			"oscillator" : {
+				"type" : "fatsawtooth",
+				"count" : 3,
+				"spread" : 30
+			},
+			"envelope": {
+				"attack": 0.01,
+				"decay": 0.1,
+				"sustain": 0.5,
+				"release": 0.4,
+				"attackCurve" : "exponential"
+			},
+		}).toMaster();
+
+		$('.keyboard button').on('mousedown', function() {
+			var note = $(this).attr('class');
+			synth.triggerAttackRelease(note, 5000);
+		});
+
+		$(document).on('mouseup', function() {
+			synth.releaseAll();
+		});
+
+	</script>
+
+	</style>
+</body>
+</html>
