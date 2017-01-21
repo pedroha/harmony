@@ -31,7 +31,7 @@
 		}
 
 		.keyboard button:hover {
-			background-color: pink;
+			background-color: yellow;
 		}
 
 		.keyboard button.active {
@@ -41,17 +41,43 @@
 	</style>
 
 	<div class="keyboard">
-		<button class="A3">A</button>
-		<button class="B3">B</button>
-		<button class="C3">C</button>
-		<button class="D3">D</button>
-		<button class="E3">E</button>
-		<button class="F3">F</button>
-		<button class="G3">G</button>
-		<button class="A4">A</button>
+
+		<div class="row">
+			<button class="A3"  data-value="9">A</button>
+			<button class="A#3" data-value="10">A#</button>
+			<button class="B3"  data-value="11">B</button>
+			<button class="C3"  data-value="0">C</button>
+			<button class="C#3" data-value="1">C#</button>
+			<button class="D3"  data-value="2">D</button>
+			<button class="D#3" data-value="3">D#</button>
+			<button class="E3"  data-value="4">E</button>
+			<button class="F3"  data-value="5">F</button>
+			<button class="F#3" data-value="6">F#</button>
+			<button class="G3"  data-value="7">G</button>
+			<button class="G#3" data-value="8">G#</button>
+		</div>
+
+		<div class="row">
+			<button class="A4"  data-value="9">A</button>
+			<button class="A#4" data-value="10">A#</button>
+			<button class="B4"  data-value="11">B</button>
+			<button class="C4"  data-value="0">C</button>
+			<button class="C#4" data-value="1">C#</button>
+			<button class="D4"  data-value="2">D</button>
+			<button class="D#4" data-value="3">D#</button>
+			<button class="E4"  data-value="4">E</button>
+			<button class="F4"  data-value="5">F</button>
+			<button class="F#4" data-value="6">F#</button>
+			<button class="G4"  data-value="7">G</button>
+			<button class="G#4" data-value="8">G#</button>
+		</div>
+
 	</div>
 
 	<script type="text/javascript">
+
+		var isDesktop = typeof window.orientation === 'undefined';
+
 
 		var synth = new Tone.PolySynth(3, Tone.Synth, {
 			"oscillator" : {
@@ -68,14 +94,29 @@
 			},
 		}).toMaster();
 
-		$('.keyboard button').on('mousedown click', function() {
-			var note = $(this).attr('class');
-			synth.triggerAttackRelease(note, 5000);
-		});
+		if (isDesktop) {
+			$('.keyboard button').on('mousedown', function() {
+				var note = $(this).attr('class');
+				if (note) {
+					synth.triggerAttackRelease(note, 5000);
+				}
+			});
+			$(document).on('mouseup', function() {
+				synth.releaseAll();
+			});
+		}
+		else {
+			$('.keyboard button').on('touchstart', function() {
+				var note = $(this).attr('class');
+				if (note) {
+					synth.triggerAttackRelease(note, 5000);
+				}
+			});
 
-		$(document).on('mouseup', function() {
-			synth.releaseAll();
-		});
+			$(document).on('touchend', function() {
+				synth.releaseAll();
+			});
+		}
 
 	</script>
 
