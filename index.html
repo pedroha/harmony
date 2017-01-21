@@ -159,6 +159,8 @@
 		}
 		else {
 			$('.keyboard button').on('touchstart', function() {
+				alert('touch start');
+		
 				var note = $(this).attr('class');
 				if (note) {
 					synth.triggerAttackRelease(note, 5000);
