@@ -68,7 +68,7 @@
 			},
 		}).toMaster();
 
-		$('.keyboard button').on('mousedown', function() {
+		$('.keyboard button').on('mousedown click', function() {
 			var note = $(this).attr('class');
 			synth.triggerAttackRelease(note, 5000);
 		});
